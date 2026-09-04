@@ -1,0 +1,29 @@
+# Dependencies and local tooling
+node_modules/
+.astro/
+.go-cache/
+server/.go-cache/
+server/.gocache/
+
+# Runtime data and secrets
+.env
+.env.*
+!.env.example
+server/data/
+server/logs/
+server/*.csv
+server/*.db
+server/*.db-*
+
+# Compiled backend binaries
+server/collector
+server/collector-*
+server/*.exe
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# dist/ and releases/ are intentionally committed.

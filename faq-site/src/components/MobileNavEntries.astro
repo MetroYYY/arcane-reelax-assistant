@@ -1,0 +1,69 @@
+---
+type SidebarEntry = (typeof Astro.locals.starlightRoute.sidebar)[number]
+
+interface Props {
+  entries: SidebarEntry[]
+  currentPath: string
+  depth?: number
+}
+
+const { entries, currentPath, depth = 0 } = Astro.props
+---
+
+<div class:list={['mobile-entry-list', { nested: depth > 0 }]}>
+  {
+    entries.map((entry) =>
+      entry.type === 'link' ? (
+        <a href={entry.href} {...entry.attrs} data-active={currentPath === entry.href}>
+          {entry.label}
+        </a>
+      ) : (
+        <section class="mobile-entry-group">
+          <div class="mobile-entry-label">{entry.label}</div>
+          <Astro.self entries={entry.entries} currentPath={currentPath} depth={depth + 1} />
+        </section>
+      ),
+    )
+  }
+</div>
+
+<style>
+  .mobile-entry-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mobile-entry-list.nested {
+    gap: 1rem;
+    padding-left: 0.75rem;
+    border-left: 1px solid var(--border);
+  }
+
+  .mobile-entry-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .mobile-entry-label {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    color: var(--foreground);
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.6rem;
+    text-decoration: none;
+  }
+
+  a[data-active='true'] {
+    color: var(--primary);
+  }
+</style>

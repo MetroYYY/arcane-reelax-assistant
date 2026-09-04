@@ -1,0 +1,103 @@
+:root {
+  --sl-content-width: 52rem;
+}
+
+.sl-markdown-content h2 {
+  border-bottom: 1px solid var(--sl-color-gray-5);
+  padding-bottom: 0.35rem;
+}
+
+/* 主题默认按内容收缩表格；正文表格在桌面端铺满内容区。 */
+.sl-markdown-content table {
+  display: table;
+  width: 100%;
+  min-width: 100%;
+}
+
+@media (max-width: 50rem) {
+  .sl-markdown-content {
+    overflow-x: auto;
+  }
+}
+
+.ui-screenshot-gallery {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.ui-screenshot-gallery details {
+  overflow: hidden;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--sl-color-gray-6) 35%, transparent);
+}
+
+.ui-screenshot-gallery summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ui-screenshot-gallery summary span {
+  color: var(--sl-color-gray-3);
+  font-size: 0.8rem;
+}
+
+.ui-screenshot-gallery details[open] summary {
+  border-bottom: 1px solid var(--sl-color-gray-5);
+}
+
+.ui-screenshot-gallery a,
+.ui-screenshot-gallery img {
+  display: block;
+  width: 100%;
+}
+
+.ui-screenshot-gallery a {
+  padding: 1rem;
+  background: color-mix(in srgb, var(--sl-color-black) 8%, transparent);
+}
+
+.ui-screenshot-gallery img {
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Black 主题会为搜索和空的社交链接容器各画一条分隔线，本站不需要。 */
+.social-icons::after,
+site-search::after {
+  display: none !important;
+}
+
+/* 桌面端左侧目录较长时明确显示滚动条，避免用户误以为下方没有更多分组。 */
+@media (min-width: 50rem) {
+  #starlight__sidebar {
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sl-color-gray-4) transparent;
+  }
+
+  #starlight__sidebar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  #starlight__sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  #starlight__sidebar::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background: var(--sl-color-gray-4);
+    background-clip: padding-box;
+  }
+
+  #starlight__sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--sl-color-gray-3);
+    background-clip: padding-box;
+  }
+}

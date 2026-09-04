@@ -1,0 +1,17 @@
+---
+import Default from '@astrojs/starlight/components/SiteTitle.astro'
+import MobileNavTrigger from './MobileNavTrigger.astro'
+---
+
+<div>
+  <Default />
+  <MobileNavTrigger />
+</div>
+
+<style>
+  div {
+    display: flex;
+    align-items: center;
+    gap: var(--sl-nav-gap);
+  }
+</style>

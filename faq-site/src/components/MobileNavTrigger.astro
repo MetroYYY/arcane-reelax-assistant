@@ -1,0 +1,79 @@
+---
+import MobileNav from './MobileNav.astro'
+---
+
+<black-menu-button class="print:hidden">
+  <button class="sl-flex md:sl-hidden" aria-expanded="false" aria-controls="starlight__sidebar">
+    <span class="hamburger" aria-hidden="true"><span class="bar bar-1"></span><span class="bar bar-2"></span></span>
+    <span class="label">{Astro.locals.t('menuButton.accessibleLabel')}</span>
+  </button>
+</black-menu-button>
+
+<MobileNav />
+
+<script>
+  class BlackMenuButton extends HTMLElement {
+    btn = this.querySelector('button')!
+
+    constructor() {
+      super()
+      this.btn.addEventListener('click', () => this.setExpanded(this.btn.getAttribute('aria-expanded') !== 'true'))
+      this.closest('nav')?.addEventListener('keyup', (event) => {
+        if (event.code === 'Escape') this.setExpanded(false)
+      })
+      matchMedia('(min-width: 50em)').addEventListener('change', () => this.setExpanded(false))
+    }
+
+    setExpanded(expanded: boolean) {
+      this.btn.setAttribute('aria-expanded', String(expanded))
+      document.body.toggleAttribute('data-mobile-menu-expanded', expanded)
+      document.querySelectorAll<HTMLElement>('.main-frame, .sl-skip-link').forEach((element) => {
+        element.toggleAttribute('inert', expanded)
+      })
+    }
+  }
+
+  customElements.define('black-menu-button', BlackMenuButton)
+</script>
+
+<style>
+  button {
+    all: unset;
+    display: inline-flex;
+    cursor: pointer;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2rem;
+    padding: 0 0.5rem;
+    margin-right: calc(var(--spacing) * 2);
+    margin-left: calc(var(--spacing) * -2);
+    border-radius: calc(var(--radius) - 2px);
+    font-size: 0.875rem;
+    touch-action: manipulation;
+  }
+
+  .hamburger {
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .bar {
+    position: absolute;
+    left: 0;
+    width: 1rem;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--foreground);
+    transition: top 100ms ease-out, transform 100ms ease-out;
+  }
+
+  .bar-1 { top: 4px; }
+  .bar-2 { top: 10px; }
+  button[aria-expanded='true'] .bar-1 { top: 50%; transform: translateY(-50%) rotate(45deg); }
+  button[aria-expanded='true'] .bar-2 { top: 50%; transform: translateY(-50%) rotate(-45deg); }
+
+  @media (min-width: 64rem) {
+    button { display: none; }
+  }
+</style>

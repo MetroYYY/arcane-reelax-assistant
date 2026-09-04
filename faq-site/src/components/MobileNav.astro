@@ -1,0 +1,33 @@
+---
+import MobileNavEntries from './MobileNavEntries.astro'
+
+const { sidebar } = Astro.locals.starlightRoute
+const currentPath = Astro.url.pathname
+---
+
+<div class="mobile-nav">
+  <nav class="mobile-nav-content" aria-label="移动端文档导航">
+    <MobileNavEntries entries={sidebar} currentPath={currentPath} />
+  </nav>
+</div>
+
+<style>
+  :global([data-mobile-menu-expanded]) {
+    --black-menu-visibility: visible;
+  }
+
+  .mobile-nav {
+    visibility: var(--black-menu-visibility, hidden);
+    position: fixed;
+    inset: var(--sl-nav-height) 0 0;
+    z-index: calc(var(--sl-z-index-navbar) + 2);
+    background-color: color-mix(in oklab, var(--background) 90%, transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  .mobile-nav-content {
+    height: 100%;
+    overflow-y: auto;
+    padding: 1.5rem;
+  }
+</style>
